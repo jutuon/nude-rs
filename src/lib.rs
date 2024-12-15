@@ -598,27 +598,27 @@ mod tests {
     fn integration_damita() {
         let img = image::open("test_data/damita.jpg").expect("failed to open");
         let score = scan(&img).analyse().score();
-        assert_eq!(score, 0.07692266666666667);
+        assert_eq!(score, 0.07450666666666667);
     }
 
     #[test]
     fn integration_damita2() {
         let img = image::open("test_data/damita2.jpg").expect("failed to open");
         let score = scan(&img).analyse().score();
-        assert_eq!(score, 0.10047466666666667);
+        assert_eq!(score, 0.09769066666666668);
     }
 
     #[test]
     fn integration_test2() {
         let img = image::open("test_data/test2.jpg").expect("failed to open");
         let score = scan(&img).analyse().score();
-        assert_eq!(score, 1.3948800000000001);
+        assert_eq!(score, 1.3851200000000001);
     }
 
     #[test]
     fn integration_test6() {
         let img = image::open("test_data/test6.jpg").expect("failed to open");
         let score = scan(&img).analyse().score();
-        assert_eq!(score, 0.31169066666666667);
+        assert_eq!(score, 0.30773333333333336);
     }
 }
