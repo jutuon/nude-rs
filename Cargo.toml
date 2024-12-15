@@ -14,8 +14,9 @@ travis-ci = { repository = "kpcyrd/nude-rs" }
 
 [dependencies]
 log = "0.4"
-image = "0.25"
+image = { version = "0.25", default-features = false }
 rand = "0.8"
 
 [dev-dependencies]
 env_logger = "0.7"
+image = { version = "0.25", default-features = false, features = ["jpeg"] }
