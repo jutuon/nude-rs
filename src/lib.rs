@@ -20,24 +20,19 @@ use rand::Rng;
 /// A classified pixel in an image
 #[derive(Debug, Clone)]
 pub struct Pixel {
-    id: u32,
     skin: bool,
     region: u64,
     x: u32,
     y: u32,
-    checked: bool,
 }
 
 impl Pixel {
     pub fn new(skin: bool, x: u32, y: u32) -> Pixel {
-        let id = (y * x) + x;
         Pixel {
-            id,
             skin,
             region: 0,
             x,
             y,
-            checked: false,
         }
     }
 }
