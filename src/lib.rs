@@ -21,7 +21,7 @@ use rand::Rng;
 #[derive(Debug, Clone)]
 pub struct Pixel {
     skin: bool,
-    region: u64,
+    region: usize,
     x: u32,
     y: u32,
 }
@@ -51,7 +51,7 @@ pub fn scan(image: &DynamicImage) -> Scan {
     let mut skin_map = Vec::new();
 
     let mut detected_regions: Vec<Vec<Pixel>> = Vec::new();
-    let mut merge_regions: Vec<Vec<u64>> = Vec::new();
+    let mut merge_regions: Vec<Vec<usize>> = Vec::new();
 
     let mut last_from = None;
     let mut last_to = None;
@@ -99,18 +99,18 @@ pub fn scan(image: &DynamicImage) -> Scan {
 
             if !checker {
                 let last = skin_map.last_mut().unwrap();
-                last.region = detected_regions.len() as u64;
+                last.region = detected_regions.len();
                 detected_regions.push(vec![last.clone()]);
                 continue;
             } else {
                 if let Some(region) = region {
-                    if detected_regions.len() - 1 < region as usize {
+                    if detected_regions.len() - 1 < region {
                         detected_regions.push(Vec::new());
                     }
 
                     let last = skin_map.last_mut().unwrap();
                     last.region = region;
-                    detected_regions[region as usize].push(last.clone());
+                    detected_regions[region].push(last.clone());
                 }
             }
         } else {
@@ -127,7 +127,7 @@ pub fn scan(image: &DynamicImage) -> Scan {
     }
 }
 
-fn add_merge(merge_regions: &mut Vec<Vec<u64>>, from: u64, to: u64) {
+fn add_merge(merge_regions: &mut Vec<Vec<usize>>, from: usize, to: usize) {
     let mut from_index = None;
     let mut to_index = None;
 
@@ -166,7 +166,7 @@ fn add_merge(merge_regions: &mut Vec<Vec<u64>>, from: u64, to: u64) {
     }
 }
 
-fn merge(mut detected_regions: Vec<Vec<Pixel>>, merge_regions: Vec<Vec<u64>>) -> Vec<Vec<Pixel>> {
+fn merge(mut detected_regions: Vec<Vec<Pixel>>, merge_regions: Vec<Vec<usize>>) -> Vec<Vec<Pixel>> {
     let mut new_detected_regions = Vec::new();
 
     // merging detected regions
@@ -174,7 +174,7 @@ fn merge(mut detected_regions: Vec<Vec<Pixel>>, merge_regions: Vec<Vec<u64>>) ->
         new_detected_regions.push(Vec::new());
 
         for r_index in region {
-            new_detected_regions[index].append(&mut detected_regions[*r_index as usize]);
+            new_detected_regions[index].append(&mut detected_regions[*r_index]);
         }
     }
 
